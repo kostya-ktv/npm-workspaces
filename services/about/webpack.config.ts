@@ -10,7 +10,7 @@ import path from "path";
 export default function (env: IEnvVariablesKeys) {
   const options: BuildOptions = {
     mode: env.MODE,
-    port: env.PORT,
+    port: env.PORT || 3002,
     isDev: env.MODE === "development",
     isProd: env.MODE === "production",
     withAnalyzer: env.ANALYZER === "on",
@@ -24,17 +24,13 @@ export default function (env: IEnvVariablesKeys) {
       locales: path.resolve(__dirname, "public", "locales"),
     },
   };
-  const SHOP_REMOTE_URL = env?.SHOP_REMOTE_URL ?? "http://localhost:3001";
-
-  const ABOUT_REMOTE_URL = env?.ABOUT_REMOTE_URL ?? "http://localhost:3002";
   const config = buildWebpack(options);
   config.plugins.push(
     new Webpack.container.ModuleFederationPlugin({
-      name: "host",
+      name: "about",
       filename: "remoteEntry.js", //default name for remote containers
-      remotes: {
-        shop: `shop@${SHOP_REMOTE_URL}/remoteEntry.js`,
-        about: `about@${ABOUT_REMOTE_URL}/remoteEntry.js`,
+      exposes: {
+        "./Router": "./src/router/index.tsx",
       },
       shared: {
         ...PackageJson.dependencies,

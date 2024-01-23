@@ -5,17 +5,15 @@ export default function buildDevServer({
   isDev,
   port,
 }: BuildOptions): DevServerConfig {
-  return isDev
-    ? {
-        port: port ?? 3000,
-        open: true,
-        /* react router dom required
+  return {
+    port: port ?? 3000,
+    open: true,
+    /* react router dom required
           but works only with DevServer
           for static data need to proxy to index.html
         */
-        historyApiFallback: true,
-        // Enable default Hot Module Replacement
-        hot: true,
-      }
-    : undefined;
+    historyApiFallback: true,
+    // Enable default Hot Module Replacement
+    hot: true,
+  };
 }

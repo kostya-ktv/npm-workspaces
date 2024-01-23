@@ -28,5 +28,6 @@ export function buildWebpack(options: BuildOptions) {
       maxAssetSize: 512000,
     },
   };
+
   return config;
 }

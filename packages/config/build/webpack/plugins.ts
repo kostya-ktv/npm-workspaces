@@ -19,6 +19,7 @@ export default function buildPlugins({
     new HtmlWebpackPlugin({
       template: paths.html,
       favicon: paths.favicon,
+      publicPath: "/",
     }),
 
     new Webpack.DefinePlugin({
